@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			html,body{
+				height: 100%;
+			}
+			body{
+				background: url(img/6/bg.jpg);
+				margin: 0;
+				padding: 0;
+			}
+			#leftBar{
+				width: 114px;
+				/*background-color: red;*/
+				border-right: 1px solid #EBBF8D;
+				height: 100%;
+				float: left;
+			}
+			#left_nav{
+				background: url(img/6/left_02.jpg) top repeat-y;
+				width: 114px;
+				padding-top: 5px;
+			}
+			#left_nav div{
+				padding-bottom: 5px;
+			}
+			.doorbg{
+				position: relative;
+				overflow: hidden;
+			}
+			.book_f1{
+				background: url(img/6/book_fl.jpg) no-repeat;
+				width: 114px;
+				height: 104px;
+			}
+			.book_f2{
+				background: url(img/6/book_xt.jpg) no-repeat;
+				width: 114px;
+				height: 104px;
+			}
+			.book_f3{
+				background: url(img/6/book_zh.jpg) no-repeat;
+				width: 114px;
+				height: 104px;
+			}
+			.doorbg .mask{
+				position: absolute;
+				height: 104px;
+				width: 114px;
+				z-index: 10;
+			}
+			.doorbg .door_l{
+				background: url(img/6/rightdoor.png) no-repeat;
+				width: 57px;
+				height: 104px;
+				position: absolute;
+				left: 0;
+				top: 0;
+			}
+			.doorbg .door_r{
+				background: url(img/6/leftdoor.png) no-repeat;
+				width: 57px;
+				height: 104px;
+				position: absolute;
+				right: 0;
+				top: 0;
+			}
+			.doorbg .num_v{
+				position: absolute;
+				left: 23px;
+				color: white;
+				top: 80px;
+				width: 10px;
+				height: 10px;
+				font-size: 14px;
+			}
+			
+			.all{
+				text-align: center;
+				background: url(img/6/ld_39.png) no-repeat;
+				font-size: 16px;
+				color: white;
+				width: 80px;
+				height: 40px;
+				margin: 0 auto;
+			}
+			.all a{
+				color: white;
+				text-decoration: none;
+				line-height: 30px;
+				text-align: center;
+				display: block;
+				width: 100%;
+				height: 100%;
+			}
+			/*箭头*/
+			#main_con{
+				position: relative;
+				height: 100%;
+				float: left;
+				width: 85%;
+				/*background-color: red;*/
+			}
+			#main_con div:first-child{
+				background: url(img/6/doc1.png) no-repeat;
+				width: 10px;
+				height: 15px;
+				position: absolute;
+				left: 0;
+				bottom: 5px;
+				cursor: pointer;/*小手*/
+			}
+			#flower{
+				background: url(img/6/flower.png) no-repeat;
+				position: absolute;
+				right: 0;
+				bottom: 20px;
+				width: 600px;
+				height: 170px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="leftBar">
+			<div id="left_nav">
+				<div class="doorbg book_f1">
+					<div class="door_l"></div>
+					<div class="door_r"></div>
+					<div class="mask"></div>
+					<div class="num_v">16</div>
+				</div>
+				<div class="doorbg book_f2">
+					<div class="door_l"></div>
+					<div class="door_r"></div>
+					<div class="mask"></div>
+					<div class="num_v">23</div>
+				</div>
+				<div class="doorbg book_f3">
+					<div class="door_l"></div>
+					<div class="door_r"></div>
+					<div class="mask"></div>
+					<div class="num_v">08</div>
+				</div>
+			</div>
+			<div class="all">
+				<a href="#">全部</a>
+			</div>
+		</div>
+		<div id="main_con">
+			<!--箭头-->
+			<div class="doorclose"></div>
+			<div id="ldoor1"></div>
+			<div id="flower"></div>
+		</div>
+		
+		<script src="../js/jquery-3.1.1.min.js"></script>
+		
+		<script>
+			/*
+			$('.mask').hover(function(){
+				//打开
+				door($(this),'open');
+			},function(){
+				//关闭
+				door($(this),'close');
+			})*/
+			/*
+			$('.mask').hover(function(){
+				//当前的打开
+				door($(this),'open');
+				//其他的关闭
+				door($('.mask').not($(this)),'close');
+			})*/
+			
+			$('.mask').click(function(){
+				//当前的打开
+				door($(this),'open');
+				//其他的关闭
+				door($('.mask').not($(this)),'close');
+			})
+			$('.mask').hover(function(){
+				//trigger 主动出触发事件
+				//在需要的情况主动触发某个事件（不需要用户去触发）
+				$(this).trigger('click');
+			})
+			
+			//当第一次进来的的时候
+			$('.mask:first').trigger('click');
+			/*door($('.mask:first'),'open');
+			//其他的关闭
+			door($('.mask:first').not($('.mask:first')),'close');*/
+			
+			//开关门  selector---控制那个门   switc -- 开还是关
+			function door(selector,switc){
+				//判断是open还是close，open打开-55 close关闭0
+				var num = switc == 'open'?-50:0;
+				//$('.mask')  prevAll('.door_l')找到.mask当前前面所有的左门
+				selector.prevAll('.door_l').animate({
+					left : num
+				},30);
+				selector.prevAll('.door_r').animate({
+					right : num
+				},30)
+			}
+			
+			//箭头
+			$('#main_con div:first').click(function(){
+				//左侧栏是显示还是隐藏
+				if($('#leftBar').is(':visible')){
+					//显示就隐藏
+					$('#leftBar').hide();
+					//左侧栏隐藏 箭头是右箭头
+					$(this).css({'background':'url(img/6/doc1.png) -10px 0 no-repeat'});
+				}else{
+					//隐藏就显示
+					$('#leftBar').show();
+					//左侧栏显示 箭头是左箭头
+					$(this).css({'background':'url(img/6/doc1.png) no-repeat'});
+				}
+			})
+			
+			
+		</script>
+		
+	</body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			#main{
+				width: 560px;
+				height: 150px;
+				background: red;
+				margin: 0 auto;
+			}
+			#main ul{
+				list-style: none;
+				width: 600px;
+				height: 150px;
+				position: relative;
+			}
+			/*#main ul li{*/
+			li{
+				float: left;
+				overflow: hidden;
+				width: 45px;
+				position: relative;
+			}
+			#main ul li h3{
+				width: 15px;
+				padding: 20px 15px;
+				height: 110px;
+				background-color: green;
+				font-size: 15px;
+			}
+			#main ul li div{
+				width: 355px;
+				background: blue;
+				height: 150px;
+				position: absolute;
+				left: 45px;
+				top: 0;
+			}
+			.active{
+				width: 400px;
+			}
+		</style>
+	</head>
+	<body>
+		
+		<div id="main">
+			<ul>
+				<li class="active">
+					<h3>白玫瑰1</h3>
+					<div>1</div>
+				</li>
+				<li>
+					<h3>白玫瑰2</h3>
+					<div>2</div>
+				</li>
+				<li>
+					<h3>白玫瑰3</h3>
+					<div>3</div>
+				</li>
+				<li>
+					<h3>白玫瑰4</h3>
+					<div>4</div>
+				</li>
+				<li>
+					<h3>白玫瑰5</h3>
+					<div>5</div>
+				</li>
+			</ul>
+			
+		</div>
+		
+		<script src="../js/jquery-3.1.1.min.js"></script>
+		<script>
+			
+			$('#main ul li').mouseover(function(){
+				//stop 停止动画（不要让动画反复执行）
+				$(this).stop().animate({'width':'400px'},300)
+					   .siblings().stop().animate({'width':'45px'},300);
+				//当前的li宽度变成400px 其他兄弟（siblings）节点li宽度变成45px
+			})
+			
+		</script>
+	</body>
+</html>

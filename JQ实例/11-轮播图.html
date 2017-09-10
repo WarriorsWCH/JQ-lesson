@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			/*导航*/
+			#nav img{
+				display: block;
+				width: 100%;
+			}
+			/*主要内容*/
+			#main{
+				width: 100%;
+				height: 420px;
+				background: url(img/11/timeGo.png);
+			}
+			#main .mainCon{
+				width: 1200px;
+				height: 420px;
+				margin: 0 auto;
+			}
+			/*左侧图片*/
+			#main .mainCon .left{
+				float: left;
+			}
+			/*右侧图片*/
+			#main .mainCon .right{
+				float: left;
+			}
+			/*轮播图*/
+			#main .mainCon .banner{
+				float: left;
+				width: 820px;
+				height: 420px;
+				position: relative;
+			}
+			/*上一页 下一页*/
+			#main .mainCon .banner a{
+				width: 71px;
+				height: 71px;
+				position: absolute;
+				top: 50%;
+				margin-top: -35px;
+				display: none;
+				/*z-index: 10;*/
+			}
+			/*上一页 左侧*/
+			#main .mainCon .banner a.prev{
+				left: -35px;
+				background: url(img/11/but.png) -71px 0;
+			}
+			#main .mainCon .banner a.prev:hover{
+				background-position: 0 0;
+			}
+			/*下一页 右侧*/
+			#main .mainCon .banner a.next{
+				right: -35px;
+				background: url(img/11/but.png) -71px 71px;
+			}
+			#main .mainCon .banner a.next:hover{
+				background-position: 0 -71px;
+			}
+			/*圆点*/
+			#main .mainCon .banner .btn{
+				width: 150px;
+				height: 20px;
+				position: absolute;
+				background: rgba(0, 0, 0, .5);
+				left: 50%;
+				margin-left: -75px;
+				bottom: 15px;
+				border-radius: 20px;
+				text-align: center;
+			}
+			/*每个圆点*/
+			#main .mainCon .banner .btn span{
+				width: 10px;
+				height: 10px;
+				border-radius: 5px;
+				background-color: #666;
+				display: inline-block;
+			}
+			/*鼠标悬浮*/
+			#main .mainCon .banner .btn span:hover{
+				background-color: #FF0088;
+				cursor: pointer;
+			}
+			/*默认第一个*/
+			#main .mainCon .banner .btn span.hover{
+				background-color: #FF0088;
+			}
+			/*轮播的图片*/
+			#main .mainCon .banner .scroll{
+				width: 820px;
+				height: 420px;
+				position: relative;
+				overflow: hidden;
+			}
+			/*所有图片定位*/
+			#main .mainCon .banner .scroll img{
+				position: absolute;
+				left: 820px;
+			}
+			/*默认显示第一张图片*/
+			#main .mainCon .banner .scroll img.first{
+				left: 0;
+			}
+		</style>
+	</head>
+	<body>
+		<!--导航-->
+		<div id="nav">
+			<img src="img/11/nav.png" />
+		</div>
+		<!--主要内容-->
+		<div id="main">
+			<div class="mainCon">
+				<!--左侧图片-->
+				<div class="left">
+					<img src="img/11/left.png" />
+				</div>
+				<!--轮播图-->
+				<div class="banner">
+					<!--图片部分-->
+					<div class="scroll">
+						<img class="first" src="img/11/flash1.jpg" />
+						<img src="img/11/flash2.jpg" />
+						<img src="img/11/flash3.jpg" />
+						<img src="img/11/flash4.jpg" />
+						<img src="img/11/flash5.png" />
+						<img src="img/11/flash6.jpg" />
+					</div>
+					<!--左右按钮-->
+					<a href="#" class="prev"></a>
+					<a href="#" class="next"></a>
+					<!--圆点按钮-->
+					<div class="btn">
+						<span class="hover"></span>
+						<span></span>
+						<span></span>
+						<span></span>
+						<span></span>
+						<span></span>
+					</div>
+				</div>
+				<!--右侧图片-->
+				<div class="right">
+					<img src="img/11/right.png" />
+				</div>
+			</div>
+		</div>
+		
+		<script src="../js/jquery-3.1.1.min.js"></script>
+		<script>
+			//上一页下一页 显示和隐藏  .banner下的a标签
+			$('.banner').hover(function(){
+				$('.prev,.next').stop().fadeIn(500);
+			},function(){
+				$('.prev,.next').stop().fadeOut(500);
+			})
+			
+			//定时器
+			var timer     = null,//定时器
+				index     = 0,//当前的图片索引
+				qianIndex = 0;//前一个图片索引
+			autoPaly();
+			//自动的轮播
+			function autoPaly(){
+				//定时器 控制自动轮播
+				timer = setInterval(function(){
+					//index 记录当前的图片索引
+					index++;//如果index++如果是6,当前的图片index=5最后一张
+					if(index > 5){
+						//当前的0第一张
+						index = 0;
+						//前一个是5第六张
+						qianIndex = 5;
+					}else{
+						//前一张
+						qianIndex = index - 1;
+					}
+					
+					//自动轮播 图片向左移动
+					//当前图片向左移动
+					//下一张图片向左移动
+					scrollPlay();
+				},2000);
+			}
+			
+			//各种情况轮播的处理,然后相应图片的动画/移动
+			function scrollPlay(){
+				//相应的圆点处于选中状态
+				$('.btn span').eq(index).addClass('hover').siblings().removeClass('hover');
+				
+				//index=0  第六张图片（最后一张） 把第一张放在当前图片的右侧
+				if(index == 0 && qianIndex == 5){//向左临界判断
+					//当前的向左移动   最后一张移动到最左侧，下一张应该是第一张
+					$('.scroll img').eq(qianIndex).stop().animate({
+						'left' : '-820px'
+					},500);
+					//第一张的图片，先放到最右侧，然后在移动到中间显示
+					$('.scroll img').eq(index).css({'left':'820px'}).stop().animate({
+						'left' : 0
+					},500);
+					//前一张索引小于当前索引
+				}else if(qianIndex ==0 && index==5){//向右的临界判断
+					$('.scroll img').eq(qianIndex).stop().animate({
+						'left' : '820px'
+					},500);
+					$('.scroll img').eq(index).css({'left' : '-820px'}).stop().animate({
+						'left' : 0
+					},500);
+				}
+				else if(qianIndex < index){//向左移动
+					$('.scroll img').eq(qianIndex).stop().animate({
+						'left' : '-820px'
+					},500);
+					$('.scroll img').eq(index).css({'left' : '820px'}).stop().animate({
+						'left' : 0
+					},500);
+					
+				}else if(qianIndex > index){//向右移动
+					$('.scroll img').eq(qianIndex).stop().animate({
+						'left' : '820px'
+					},500);
+					$('.scroll img').eq(index).css({'left' : '-820px'}).stop().animate({
+						'left' : 0
+					},500);
+				}
+				
+			}
+			
+			
+			//圆点的hover
+			$('.btn span').hover(function(){
+				//鼠标移入的时候 显示相应的图片
+				
+				//清除定时器 停止自动轮播
+				clearInterval(timer);
+				
+				//记录鼠标滑入之前显示的图片索引（是第几张）
+				qianIndex = index;
+				//找到相应的圆点
+				index =  $(this).index();//马上进来/显示的图片
+				
+				//qianIndex = index - 1;
+				scrollPlay();
+				
+			},function(){
+				//鼠标移出的时候继续自动轮播
+				autoPaly();
+			})
+			
+			//上一页下一页的翻页
+			$('.next').click(function(){
+				//清除定时器
+				clearInterval(timer);
+				
+				index++;
+				//到达临界位置
+				if(index > 5){
+					index = 0;
+					qianIndex = 5;
+				}else{
+					//非临界位置
+					qianIndex = index - 1;
+				}
+				
+				//轮播下一张
+				scrollPlay();
+				
+				//自动轮播
+				autoPaly();
+			});
+			//上一页  向右轮播
+			$('.prev').click(function(){
+				//清除定时器
+				clearInterval(timer);
+				index --;
+				//到达临界位置
+				if(index < 0){
+					index = 5;
+					qianIndex = 0;
+				}else{
+					qianIndex = index + 1;
+				}
+				//轮播上一张
+				scrollPlay();
+				//自动轮播
+				autoPaly();
+			})
+			
+			
+		</script>
+	</body>
+</html>

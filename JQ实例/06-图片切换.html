@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			#div1{
+				position: absolute;
+				width: 200px;
+				height: 200px;
+				left: 300px;
+			}
+			#div1 div{
+				width: 200px;
+				height: 200px;
+				text-align: center;
+				line-height: 200px;
+				font-size: 38px;
+				position: absolute;
+				/*left:0;*/
+			}
+			input{
+				margin: 200px 5px 0 10px;
+			}
+		</style>
+	</head>
+	<body>
+		
+		
+		<div id="div1">
+			<div style="background-color: red;">red1</div>
+			<div style="background-color: green;">green2</div>
+			<div style="background-color: yellow;">yellow3</div>
+			<div style="background-color: blue;">blue4</div>
+			<div style="background-color: pink;">pink5</div>
+		</div>
+		
+		<div>
+			<input type="button" value="上一页" id="btn1" />
+			<input type="button" value="下一页" id="btn2" />
+		</div>
+		
+		
+		<script src="../js/jquery-3.1.1.min.js"></script>
+		<script>
+			
+			//绑定事件  上一页  5 4 3 2 1  --  4 3 2 1 5 -- 3 2 1 5 4 - 
+			$('#btn1').click(function(){
+				//最后一个div 在最上面
+				$('#div1>div:last').stop().animate({
+					left : '-200px'//向左运动
+				},1000,function(){
+					//把最后一个div插入到最前面
+					//$(this).insertBefore($('#div1>div:first'));
+					$('#div1').prepend($(this));//在最前面追加 和append功能相反
+					$(this).stop().animate({
+						left : 0//向右运动  回到原来的定位
+					},1000)
+				});
+				//运动父div
+				$('#div1').stop().animate({
+					left : '350px'
+				},1000,function(){
+					$('#div1').stop().animate({
+						left : '300px'
+					},1000)
+				})
+			})
+			
+			$('#btn2').click(function(){
+				$('#div1>div:first').animate({
+					left : '200px'
+				},1000,function(){
+					//插入到div1的最后面   显示上是在最上面
+					$('#div1').append($(this));
+					$(this).animate({
+						left : 0
+					},1000)
+				});
+				
+				$('#div1').animate({
+					left : '250px'
+				},1000,function(){
+					$('#div1').animate({
+						left : '300px'
+					},1000)
+				})
+			})
+			
+			
+			
+		</script>
+		
+	</body>
+</html>

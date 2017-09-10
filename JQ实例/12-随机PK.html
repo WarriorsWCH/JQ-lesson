@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			body{
+				background-color: #999999;
+			}
+			#header{
+				margin: 0 auto;
+				text-align: center;
+			}
+			#header span{
+				font-size: 30px;
+				color: #FF0088;
+				display: inline-block;
+				padding: 20px;
+				font-weight: bold;
+			}
+			#header span.pname{
+				background-color: #e5e5e4;
+				border: 1px solid #00CED1;
+				box-shadow: 0 0 20px #00008B;
+				border-radius: 10px;
+			}
+			.pkbtn{
+				font-size: 25px;
+				width: 100px;
+				margin: 0 auto;
+				text-align: center;
+				cursor: pointer;
+				margin-top: 20px;
+				border: 1px solid #FF0000;
+				border-radius: 15px;
+				color: #000000;
+				background-color: #FF0088;
+				font-weight: bold;
+				padding: 20px;
+				box-shadow: 0 0 20px #EBBF8D;
+			}
+			.pkcontent{
+				font-size: 22px;
+				margin: 0 auto;
+				/*text-align: center;*/
+				width: 600px;
+			}
+			.pkcontent p{
+				border-radius: 5px;
+				color: #000000;
+				background-color: #00ff22;
+				padding: 10px;
+				box-shadow: 0 0 20px #00FF22;
+			}
+		</style>
+	</head>
+	<body>	
+		<div id="header">
+			<span class="pname">第一个</span>
+			<span class="vs">-VS-</span>
+			<span class="pname">第二个</span>
+		</div>
+		<!--pk按钮-->
+		<div class="pkbtn">开始PK</div>
+		
+		<!--显示的内容，每一轮的情况-->
+		<div class="pkcontent">
+			
+		</div>
+		
+		<div id="footer"></div>
+		
+		
+		<script src="../js/jquery-3.1.1.min.js"></script>
+		<script src="player.js"></script>
+		<script src="judge.js"></script>
+		
+		
+		<script>
+			
+			var nameList = ["程王灿","陈琼","张斌","彭良超","张秀智",
+							"王茹泽","马瑶伟","高丹","程波","许蕾","沈子越",
+							"华志强","张晗","张华强","王腾","盛超伟","陈荟星",
+							"马坤鹏","宋城里","曹风景","张蓓蓓","方志","姜淮",
+							"璩庭悦","仲崇粮","鲁悦鑫","方波","李冰"," 李涛 ",
+							" 任金鹏 "," 张佳佳 ","江兵","刘海鹏"," 孟庆岳 ",
+							"杨风"," 杨帅 "," 刘建宇 "," 赵海建 "];
+			
+			var name = nameList[parseInt(Math.random()*38)];
+			var ele = $('.pname')[0];
+			ele.innerHTML = '程序猿:' + name;
+			//玩家1
+			var player1 = new Player(name, 300, ele);
+			
+			
+			name = nameList[parseInt(Math.random()*38)];
+			ele = $('.pname')[1];
+			ele.innerHTML = '工程狮:' + name;
+			//玩家2
+			var player2 = new Player(name, 300, ele);
+			
+			//裁判
+			var judge = new Judge();
+			
+			//点击pk按钮
+			$('.pkbtn').click(function(){
+				//开始游戏
+				judge.begin(player1,player2);
+			});
+			
+			
+		</script>
+	</body>
+</html>

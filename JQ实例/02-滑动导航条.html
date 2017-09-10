@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			#nav{
+				list-style: none;
+				margin: 0;
+				padding: 0;
+				position: fixed;
+				top: 0;
+				right: 0;
+				width: 700px;
+				font-size: 0;
+				/*background-color: green;*/
+			}
+			#nav li{
+				display: inline-block;
+				float: left;
+				width: 100px;
+				font-size: 14px;
+				/*background-color: red;*/
+			}
+			#nav li a{
+				background-color: #e5f3f4;
+				border: 1px solid #0000FF;
+				border-radius: 0 0 10px 10px;
+				display: block;
+				height: 25px;
+				opacity: 0.8;
+				padding-top: 80px;
+				text-align: center;
+				text-decoration: none;
+				width: 100%;
+				color: #0000FF;
+				letter-spacing: 3px;
+			}
+			#nav li a:hover{
+				background-color: #d5e3d4;
+			}
+		</style>
+	</head>
+	<body>
+		
+		<ul id="nav">
+			<li><a href="">第1组</a></li>
+			<li><a href="">第2组</a></li>
+			<li><a href="">第3组</a></li>
+			<li><a href="">第4组</a></li>
+			<li><a href="">第5组</a></li>
+			<li><a href="">第6组</a></li>
+			<li><a href="">第7组</a></li>
+		</ul>
+		
+		<script src="../js/jquery-3.1.1.min.js"></script>
+		<script>
+	
+				var time = 300;
+				//each 遍历 即可以遍历数组也可以遍历对象
+				$('#nav li a').each(function(index){
+					//获取每个a标签
+					$(this).animate({
+						marginTop : '-80px'
+					},time += 100);
+				})
+	
+				$('#nav li a').hover(function(){
+					//鼠标移入
+					//在添加动画之前，把上次动画停止
+					$(this).stop().animate({
+						marginTop : '0px'
+					},300);
+					
+				},function(){
+					//鼠标移出
+					//在添加动画之前，把上次动画停止
+					$(this).stop().animate({
+						marginTop : '-80px'
+					},300)
+				})
+			
+		</script>
+	</body>
+</html>

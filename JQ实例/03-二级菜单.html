@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			li{
+				list-style: none;
+			}
+			.li{
+				list-style-image: url(img/-.gif);
+			}
+		</style>
+	</head>
+	<body>
+		<ul>
+			<li class="li">主题会场
+				<ul>
+					<li>运动</li>
+					<li>有车</li>
+					<li>生活</li>
+				</ul>
+			</li>
+			<li class="li">特色购物
+				<ul>
+					<li>二手车</li>
+					<li>拍卖会</li>
+					<li>全球购</li>
+				</ul>
+			</li>
+			<li class="li">优惠促销
+				<ul>
+					<li>特价</li>
+					<li>免费</li>
+					<li>清仓</li>
+				</ul>
+			</li>
+			<li>工具</li>
+		</ul>
+		
+		<script src="../js/jquery-3.1.1.min.js"></script>
+		<script>
+			
+			$('.li').click(function(e){
+				//e.target 当前点击的元素     this=.li
+				if(this == e.target){
+					//判断  子元素是否显示  显示则隐藏
+					if($(this).children().is(':visible')){
+						//-号变成+号
+						$(this).css({
+							'list-style-image' : 'url(img/1.gif)'
+						}).children().hide();//让子元素隐藏
+						
+					}else{
+						$(this).css({
+							'list-style-image' : 'url(img/-.gif)'
+						}).children().show();
+					}
+				}	
+			})
+			
+		</script>
+	</body>
+</html>

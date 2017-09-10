@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			body{
+				font-size: 12px;
+				text-align: center;
+			}
+			a{
+				color: blue;
+				text-decoration: none;
+			}
+			a:hover{
+				color: red;
+				text-decoration: underline;
+			}
+			.stageBox{
+				width: 600px;
+				margin: 0 auto;
+				text-align: center;
+				margin-top: 40px;
+			}
+			.stageBox li{
+				list-style: none;
+				display: block;
+				float: left;
+				line-height: 20px;
+				width: 200px;
+			}
+			.showmore{
+				clear:both;
+				text-align: center;
+				padding-top: 10px;
+			}
+			.showmore a{
+				display: block;
+				width: 120px;
+				margin: 0 auto;
+				line-height: 25px;
+				border: 1px solid red;
+			}
+			.showmore a span{
+				padding-left: 20px;
+				background: url(img/down.gif) no-repeat 0 0;
+			}
+			.red{
+				color: red;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="stageBox">
+			<ul>
+				<li><a href="">照相机1</a></li>
+				<li><a href="">照相机2</a></li>
+				<li><a href="">照相机3</a></li>
+				<li><a href="">照相机4</a></li>
+				<li><a href="">照相机5</a></li>
+				<li><a href="">照相机6</a></li>
+				<li><a href="">照相机7</a></li>
+				<li><a href="">照相机8</a></li>
+				<li><a href="">照相机9</a></li>
+				<li><a href="">照相机10</a></li>
+				<li><a href="">照相机11</a></li>
+				<li><a href="">照相机12</a></li>
+				<li><a href="">照相机13</a></li>
+				<li><a href="">其他品牌相机</a></li>
+			</ul>
+			
+			<div class="showmore">
+				<a href="#"><span>显示全部品牌</span></a>
+			</div>
+		</div>
+	</body>
+	
+	<script src="../js/jquery-3.1.1.min.js"></script>
+	
+	<script>
+		//隐藏不显示的li
+		var hideLi = $('.stageBox ul li:gt(5):not(:last)');
+		hideLi.css('display','none');
+		
+		//绑定事件 显示全部
+		$('.showmore').click(function(){	
+			//拿到span标签（显示全部品牌）
+			var span = $('.showmore a span');
+			console.log(this);//DOM元素
+			if(span.text() == '显示全部品牌'){
+				//$(this).find('a').find('span').text('隐藏更多品牌');
+				//内容变化
+				span.text('隐藏更多品牌');
+				//隐藏的li显示
+				hideLi.css('display','block');
+				//更换箭头图片
+				span.css('background','url(img/up.gif) no-repeat 0 0');
+				//红色的li添加.red的class
+				//$('.stageBox li a:eq(0),.stageBox li a:eq(3),.stageBox li a:eq(10)').addClass('red');
+				//filter 过滤
+				$('.stageBox li a').filter(':eq(0),:eq(3),:eq(10)').addClass('red');
+			}else{
+				span.text('显示全部品牌');
+				hideLi.css('display','none');
+				span.css('background','url(../img/down.gif) no-repeat 0 0');
+				$('.stageBox li a:eq(0),.stageBox li a:eq(3),.stageBox li a:eq(10)').removeClass('red');
+			}
+			
+		})
+	</script>
+	
+</html>

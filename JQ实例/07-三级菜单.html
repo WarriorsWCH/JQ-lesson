@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			li{
+				list-style: none;
+			}
+		</style>
+	</head>
+	<body>
+		<ul>
+			<li>主题会场
+				<ul>
+					<li>运动
+						<ul>
+							<li>三级菜单</li>
+							<li>三级菜单</li>
+							<li>三级菜单</li>
+						</ul>
+					</li>
+					<li>有车
+						<ul>
+							<li>三级菜单
+								<ul>
+									<li>四级菜单</li>
+									<li>四级菜单</li>
+									<li>四级菜单</li>
+								</ul>
+							</li>
+							<li>三级菜单</li>
+							<li>三级菜单</li>
+						</ul>
+					</li>
+					<li>生活</li>
+				</ul>
+			</li>
+			<li>特色购物
+				<ul>
+					<li>二手车
+						<ul>
+							<li>三级菜单</li>
+							<li>三级菜单</li>
+							<li>三级菜单</li>
+						</ul>
+					</li>
+					<li>拍卖会</li>
+					<li>全球购</li>
+				</ul>
+			</li>
+			<li>优惠促销
+				<ul>
+					<li>特价
+						<ul>
+							<li>三级菜单</li>
+							<li>三级菜单</li>
+							<li>三级菜单</li>
+						</ul>
+					</li>
+					<li>免费</li>
+					<li>清仓</li>
+				</ul>
+			</li>
+			<li>工具</li>
+		</ul>
+		<script src="../js/jquery-3.1.1.min.js"></script>
+		<script>
+			//has 判断是否有某个子元素
+			//如果有ul标签说明是有子菜单
+			$('li:has(ul)').css({'list-style':'url(img/-.gif)'});
+			//绑定事件
+			$('li:has(ul)').click(function(){
+				
+				//判断点击当前li是否是触发的目标（元素/li）
+				if(this == event.target){
+					//判断 是要变成-号还是+号（子标签是否是显示-，还是隐藏+）
+					if($(this).children().is(':visible')){
+						$(this).css({'list-style':'url(img/1.gif)'});
+					}else{
+						$(this).css({'list-style':'url(img/-.gif)'});
+					}
+					//如果显示就隐藏，隐藏就显示
+					$(this).children().toggle('slow');
+				}
+			})
+			
+		</script>
+	</body>
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			html,body{
+				width: 100%;
+				height:100%
+			}
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			#bg{
+				background: url(img/9/bg.jpg) no-repeat;
+				width: 100%;
+				height: 100%;
+				background-size: cover;
+				position: relative;
+			}
+			img{
+				width: 18px;
+				height: 18px;
+				position: absolute;
+			}
+		</style>
+	</head>
+	<body>
+		
+		<div id="bg"></div>
+		
+	</body>
+	<script src="../js/jquery-3.1.1.min.js"></script>
+	
+	<script>
+		//萤火虫 构造函数
+		function FireFly(){//创建img标签 --- 萤火虫对象
+			//属性  --- img标签
+			this.ele = $('<img src="img/9/1.jpg"/>');//把img标签作为萤火虫的属性
+		}
+		
+		//萤火虫的方法     飞  显示  速度...
+		//显示
+		FireFly.prototype.show = function(){
+			//位置   定位   top  left  位置  随机
+			this.ele.css({
+				'top' : this.pointY,
+				'left' : this.pointX
+			});
+			//div中追加
+			$('#bg').append(this.ele);
+			
+			return this;
+		}
+		
+		//随机位置
+		FireFly.prototype.newPoiont = function(){
+			//随机的top值  window.innerWidth 获得窗口宽
+			this.pointY = Math.floor(Math.random()*(window.innerHeight - 100));//距离窗口100
+			//随机的left值
+			this.pointX = Math.floor(Math.random()*(window.innerWidth - 100));
+			
+			//返回对象本身  为了链式调用方便  对当前这个方法没有任何影响
+			return this;
+		}
+		
+		//随机速度
+		FireFly.prototype.speed = function(){
+			//速度   时间   5000 ---  10000    2s -- 5s
+			this.speedT = Math.floor(Math.random()*5000+5000);
+			
+			return this;
+		}
+		
+		//飞   --- 不停的运动
+		FireFly.prototype.fly = function(){
+			//存储this、当前的对象
+			var self = this;
+			
+			//随机的位置   随机的速度
+			this.ele.animate({
+				'top' : this.pointY,//随机的位置
+				'left' : this.pointX
+			},this.speedT,function(){
+				//想要不停的运动（实现飞的效果），动画必须持续下去
+				
+				//下一次动画 需要再随机新的位置和速度
+//				self.newPoiont();
+//				self.speed();
+//				self.fly();
+				self.newPoiont().speed().fly();//有了新的位置和速度，然后才是飞
+			});
+		}
+		
+		
+		//开始  定义有多少个萤火虫
+		var tootle = 40;
+		//存储萤火虫对象
+		var fireArr = [];
+		
+		for (var i = 0; i < tootle; i++) {
+			//创建萤火虫对象  存储到数组中
+			fireArr[i] = new FireFly();
+			
+			//显示萤火虫 --- 飞
+			//第一步：显示 -- 随机位置  第二步：飞 -- 随机位置 随机速度
+			fireArr[i].newPoiont().show().newPoiont().speed().fly();
+		}
+		
+		
+	</script>
+	
+</html>

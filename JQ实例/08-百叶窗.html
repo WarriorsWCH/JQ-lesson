@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			ul li{
+				list-style: none;
+			}
+			#main{
+				width: 100%;
+				height: 260px;
+				margin: 20px auto;
+			}
+			#main ul li{
+				width: 200px;
+				height: 260px;
+				float: left;
+				position: relative;
+			}
+			#main ul li div{
+				width: 100%;
+				height: 100%;
+			}
+			#main ul li div.des div{
+				position: absolute;
+				background: rgba(0, 0, 0, .4);
+			}
+			h4{
+				color: white;
+				font-size: 30px;
+				padding: 30px;
+				width: 40px;
+				/*margin: 0 auto;*/
+				/*background-color: red;*/
+				position: absolute;
+				left: 50px;
+			}
+		</style>
+	</head>
+	<body>
+		
+		<div id="main">
+			<ul>
+				<li>
+					<div class="des" style="background: url(img/8/1.jpg) center;">
+						<div ></div>
+						<h4>园林酒店</h4>
+					</div>
+				</li>
+				<li>
+					<div class="des" style="background: url(img/8/2.jpg) center;">
+						<div> </div>
+						<h4>设计师酒店</h4>
+					</div>
+				</li>
+				<li>
+					<div class="des" style="background: url(img/8/3.jpg) center;">
+						<div ></div>
+						<h4>青年旅社</h4>
+						
+					</div>
+				</li>
+				<li>
+					<div class="des" style="background: url(img/8/4.jpg) center;">
+						<div ></div>
+						<h4>特色客栈</h4>
+						
+					</div>
+				</li>
+				<li>
+					<div class="des" style="background: url(img/8/5.jpg) center;">
+						<div></div>
+						<h4>海岛酒店</h4>
+						
+					</div>
+				</li>
+				<li>
+					<div class="des" style="background: url(img/8/6.jpg) center;">
+						<div ></div>
+						<h4>海外温泉</h4>
+						
+					</div>
+				</li>
+			</ul>
+		</div>
+		
+		<script src="../js/jquery-3.1.1.min.js"></script>
+		<script>
+//			var a = .5;
+//			console.log(a);
+			$('#main ul li').hover(function(){
+				//把当前触发的li宽度变大400
+				$(this).stop().animate({
+					'width' : "400px"
+				},250).siblings().stop().animate({
+					//其他的li宽度变小160
+					'width' : '160px'
+				},250);
+//				$(this).find('.des').find('h4').css({'display':'none'});
+				//当前li上的h4标签和半透明div隐藏
+				$(this).find('.des').find('h4,div').stop().fadeOut(200);
+			},function(){
+				//移出的时候所有的li宽度回到原来的大小200
+				$('#main ul li').stop().animate({
+					'width' : '200px'
+				},250);
+//				$(this).find('.des').find('h4').css({'display':'block'});
+				//当前li上的h4标签和半透明div显示
+				$(this).find('.des').find('h4,div').stop().fadeIn(200);
+			})
+		</script>
+		
+	</body>
+</html>

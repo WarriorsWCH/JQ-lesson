@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			ul,ol{
+				list-style: none;
+				margin: 0;
+				padding: 0;
+			}
+			ul{
+				width: 500px;
+				height: 25px;
+			}
+			ul li{
+				float: left;
+				height: 35px;
+				padding: 0 15px;
+				background: darkturquoise;
+				text-align: center;
+				font-size: 16px;
+				color: white;
+				cursor: pointer;
+				line-height: 35px;
+			}
+			ul li + li{
+				border-left: 3px solid darkblue;
+			}
+			ol{
+				width: 500px;
+				background: darkturquoise;
+			}
+			ol li{
+				display: none;
+			}
+			/*.hide{
+				display: none;
+			}*/
+			ol .show{
+				display: block;
+			}
+			.normal{
+				color: black;
+				background: #ddd;
+			}
+			/*.hover{
+				color: white;
+				background: darkturquoise;
+			}*/
+		</style>
+	</head>
+	<body>
+		
+		<div id="tab">
+			<ul>
+				<!--(li{tab$})*3-->
+				<li class="normal">tab1</li>
+				<li>tab2</li>
+				<li>tab3</li>
+				<li>tab4</li>
+			</ul>
+			<ol>
+				<li class="show"><img src="img/5/1.jpg"/></li>
+				<li><img src="img/5/3.jpg"/></li>
+				<li><img src="img/5/5.jpg"/></li>
+				<li><img src="img/5/7.jpg"/></li>
+			</ol>
+		</div>
+		
+		<script src="../js/jquery-3.1.1.min.js"></script>
+		<script>
+			
+//			var obj = {
+//				0 : 'a',
+//				3 : 'b'
+//			}
+//			console.log(obj[0],obj[3]);
+			
+			var imgLi = $('ol li');
+			console.log(imgLi);
+			//$('ul li')  4个li
+			$('ul li').mouseover(function(){
+				//给当前li添加class，移除兄弟节点的class
+				$(this).addClass('normal').siblings().removeClass('normal');
+				//index() 元素的索引
+				var index = $(this).index();
+				imgLi.eq(index).addClass('show').siblings().removeClass('show');
+			})
+			
+		</script>
+	</body>
+</html>

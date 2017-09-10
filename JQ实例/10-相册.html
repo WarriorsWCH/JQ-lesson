@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			body{
+				background: url('img/10/bg.jpg') no-repeat;
+				background-size: cover;
+			}
+			/*九宫格*/
+			#picList{
+				width: 750px;
+				height: 560px;
+				margin: 200px auto;
+			}
+			#picList img{
+				width: 230px;
+				height: 160px;
+				padding: 4px;
+			}
+			#picList span{
+				background-color: white;
+				width: 240px;
+				height: 170px;
+				display: block;
+				float: left;
+				margin: 5px;
+				/*x轴偏移 y轴偏移 阴影模糊度  阴影的大小 阴影的颜色  内阴影/外阴影*/
+				box-shadow: 0px 0px 20px #FF0000;
+			}
+			/*背景虚化*/
+			#span{
+				position: absolute;
+				left: 0;
+				top: 0;
+				width: 100%;
+				height: 100%;
+				background: rgba(0, 0, 0, .8);
+				display: none;
+			}
+			/*相册*/
+			#showImage span{
+				width: 660px;
+				height: 460px;
+				position: absolute;
+				padding: 4px;
+				background-color: white;
+				box-shadow: 0 0 20px #0000FF;
+			}
+			#showImage img{
+				width: 100%;
+				height: 100%;
+			}
+			#showImage{
+				position: absolute;
+				left: 50%;
+				top: 50%;
+				margin-left: -330px;
+				margin-top: -250px;
+			}
+			
+			/*按钮*/
+			#next,#prev{
+				position: absolute;
+				width: 50px;
+				height: 80px;
+				border-radius: 10px;
+				box-shadow: 0 0 20px #FFFFFF;
+				cursor: pointer;
+				top: 50%;
+				margin: -40px;
+			}
+			#next{
+				right: 120px;
+				/*top: 50%;
+				margin-top: -40px;*/
+			}
+			#prev{
+				left: 120px;
+				/*top: 50%;
+				margin: -40px;*/
+			}
+			
+			#next p,#prev p{
+				font-size: 60px;
+				text-align: center;
+				line-height: 80px;
+				font-weight: bold;
+				color: #C6C6C6;
+			}
+			#show{
+				display: none;
+			}
+		</style>
+	</head>
+	<body>
+		<!--九宫格-->
+		<div id="picList">
+			<span><img src="img/10/main/1.jpg"/></span>
+			<span><img src="img/10/main/2.jpg"/></span>
+			<span><img src="img/10/main/3.jpg"/></span>
+			<span><img src="img/10/main/4.jpg"/></span>
+			<span><img src="img/10/main/5.jpg"/></span>
+			<span><img src="img/10/main/6.jpg"/></span>
+			<span><img src="img/10/main/7.jpg"/></span>
+			<span><img src="img/10/main/8.jpg"/></span>
+			<span><img src="img/10/main/9.jpg"/></span>
+		</div>
+		<!--背景虚化-->
+		<div id="span"></div>
+		
+		<!--相册的显示切换-->
+		<div id="show">
+			<div id="showImage">
+				<span><img src="img/10/show/0/1.jpg"/></span>
+				<span><img src="img/10/show/0/1.jpg"/></span>
+				<span><img src="img/10/show/0/1.jpg"/></span>
+				<span><img src="img/10/show/0/1.jpg"/></span>
+				<span><img src="img/10/show/0/1.jpg"/></span>
+			</div>
+			<!--左右按钮-->
+			<span id="prev"><p> < </p></span>
+			<span id="next"><p> > </p></span>
+		</div>
+		
+		
+		<script src="../js/jquery-3.1.1.min.js"></script>
+		<script>
+			
+			//点击九宫格图片   显示相册#show  #span
+			//显示相应的图片
+			
+			//picList  span/img  
+			var pic = $('#picList span');//九宫格的所有span
+			//相册的所有img
+			var showImg = $('#showImage img');
+			pic.click(function(){
+				//show -- span  - img -- src -- img/10/show/index/num.jpg
+				var index = $(this).index();//拿到索引
+				for(var i = 0; i < 5; i++){
+					//找到相应文件夹下的图片   index文件夹名    (i+1)图片名
+					var url = "img/10/show/" + index + "/" + (i+1) + ".jpg";
+					//相册每个img图片  src图片的路径
+					showImg.eq(i).attr('src',url);
+				}
+				//显示 #show
+				$('#show').fadeIn(800);
+				//显示 #span
+				$('#span').fadeIn(800);
+			})
+			//定时器  延时操作 为了防止双击的时候出发单击操作
+			var timer;//双击会触发两次单击，双击的操作一定会比300ms要短
+			//下一页按钮
+			$('#next').click(function(){
+				//清除定时器  为了不多次触发click操作
+				clearTimeout(timer);
+				timer = setTimeout(function(){
+					//图片切换的操作延时300ms执行
+					$('#showImage span:last').animate({
+						'left' : '668px'
+					},500,function(){
+						$(this).animate({
+							'left' : 0
+						},500);
+						//把当前的span标签添加到showImage的html结构的最前面
+						$('#showImage').prepend($(this));
+					})
+					//showImage整体向左运动
+					$('#showImage').animate({
+						'left' : "40%"
+					},500,function(){
+						$('#showImage').animate({
+							'left' : '50%'
+						},500);
+					})
+				},300)
+			})
+			//上一页
+			$('#prev').click(function(){
+				
+				$('#showImage span:first').animate({
+					'left' : '-668px'
+				},500,function(){
+					$(this).animate({
+						'left' : 0
+					},500);
+					$('#showImage').append($(this));
+				});
+				
+				$('#showImage').animate({
+					'left' : "60%"
+				},500,function(){
+					$('#showImage').animate({
+						'left' : "50%"
+					},500);
+				})
+			});
+			//点击空白（#span）
+			$('#span').click(function(){
+				//背景虚化 和 相册 渐隐（消失）
+				$(this).fadeOut(600);
+				//#show  包含（#showImage #prev #next）
+				$('#show').fadeOut(600);
+			})
+			
+		</script>
+	</body>
+</html>
